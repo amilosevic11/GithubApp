@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">GithubApp</string>
+    <string name="search">Search</string>
+    <string name="search_repositories">Search repositories…</string>
+    <string name="clear_search_entries">Clear search entries</string>
+    <string name="alert_dialog_title">All recent search entries will be deleted!</string>
+    <string name="ok_label">OK</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="repository_results">%1$s repository results</string>
+    <string name="open_owner_profile">Open owner profile</string>
+    <string name="open_owner_repositories">Open owner repositories</string>
+    <string name="private_label">Private:</string>
+    <string name="stars_label">Stars:</string>
+    <string name="watchers_label">Watchers:</string>
+    <string name="opened_issues">Opened issues:</string>
+    <string name="description">Description:</string>
+    <string name="owner_label">Owner:</string>
+    <string name="no_label">NO</string>
+    <string name="yes_label">YES</string>
+</resources>

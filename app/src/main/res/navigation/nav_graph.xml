@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchRepositoriesFragment">
+
+    <fragment
+        android:id="@+id/searchRepositoriesFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.searchrepositories.SearchRepositoriesFragment"
+        android:label="SearchRepositoriesFragment">
+        <action
+            android:id="@+id/action_searchRepositoriesFragment_to_repositoryListFragment"
+            app:destination="@id/repositoryListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/repositoryListFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.repositorylist.RepositoryListFragment"
+        android:label="RepositoryListFragment">
+        <argument
+            android:name="query"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_repositoryListFragment_to_repositoryDetailsFragment"
+            app:destination="@id/repositoryDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/repositoryDetailsFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.repositorydetails.RepositoryDetailsFragment"
+        android:label="RepositoryDetailsFragment">
+        <argument
+            android:name="repository"
+            app:argType="hr.dice.amilosevic_.githubapp.models.Repository"/>
+        <action
+            android:id="@+id/action_repositoryDetailsFragment_to_ownerProfileAndRepositoriesFragment"
+            app:destination="@id/ownerProfileAndRepositoriesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ownerProfileAndRepositoriesFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.webviewscreen.OwnerProfileAndRepositoriesFragment"
+        android:label="OwnerProfileAndRepositoriesFragment">
+        <argument
+            android:name="name"
+            app:argType="string"/>
+        <argument
+            android:name="url"
+            app:argType="string"/>
+    </fragment>
+
+</navigation>
