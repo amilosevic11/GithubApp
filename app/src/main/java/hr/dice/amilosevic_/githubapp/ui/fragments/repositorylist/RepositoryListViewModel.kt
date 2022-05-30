@@ -6,18 +6,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hr.dice.amilosevic_.githubapp.models.SearchRepositoriesResponse
 import hr.dice.amilosevic_.githubapp.repos.GithubSearchApiRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RepositoryListViewModel(private val searchApiRepository: GithubSearchApiRepository) : ViewModel() {
 
-    private var _repositoriesResponse: MutableLiveData<SearchRepositoriesResponse> = MutableLiveData()
-    val repositoriesResponse: LiveData<SearchRepositoriesResponse> = _repositoriesResponse
+    private val _repositoriesResponse: MutableLiveData<SearchRepositoriesResponse> = MutableLiveData()
+    val repositoriesResponse: LiveData<SearchRepositoriesResponse>
+        get() = _repositoriesResponse
 
     fun searchRepositories(query: String, sort: String) {
-        viewModelScope.launch {
-            searchApiRepository.searchRepositories(query, sort).collect {
-                _repositoriesResponse.postValue(it)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            _repositoriesResponse.postValue(searchApiRepository.searchRepositories(query, sort))
         }
     }
 }

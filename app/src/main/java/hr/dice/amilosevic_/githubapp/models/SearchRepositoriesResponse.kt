@@ -9,5 +9,5 @@ data class SearchRepositoriesResponse(
     @SerializedName("total_count")
     val overallNumberOfRepos: Int,
     @SerializedName("items")
-    val repositories: ArrayList<Repository>
+    val repositories: List<Repository>
 ): Parcelable

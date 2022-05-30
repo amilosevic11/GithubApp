@@ -14,23 +14,19 @@ import hr.dice.amilosevic_.githubapp.databinding.FragmentSearchRepositoriesBindi
 import hr.dice.amilosevic_.githubapp.helpers.initPopupMenu
 import hr.dice.amilosevic_.githubapp.ui.baseFragment.BaseFragment
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchRepositoriesFragment : BaseFragment<FragmentSearchRepositoriesBinding>(), PopupMenu.OnMenuItemClickListener {
 
-    private val searchRepositoriesViewModel: SearchRepositoriesViewModel by inject()
+    private val searchRepositoriesViewModel: SearchRepositoriesViewModel by viewModel()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSearchRepositoriesBinding
         get() = FragmentSearchRepositoriesBinding::inflate
 
     override fun setupUi() {
-        getRecentSearches()
         setOnClickListeners()
         initTextWatcher()
         observeData()
-    }
-
-    private fun getRecentSearches() {
-        searchRepositoriesViewModel.getAllRecentSearches()
     }
 
     private fun setOnClickListeners() {
@@ -52,15 +48,19 @@ class SearchRepositoriesFragment : BaseFragment<FragmentSearchRepositoriesBindin
         }
     }
 
-    private fun initAutocompleteItems(strings: ArrayList<String>) {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, strings)
+    private fun initAutocompleteItems(recentSearches: List<String>) {
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, recentSearches)
         binding.textInputEditText.setAdapter(adapter)
     }
 
     private fun initTextWatcher() {
         binding.textInputEditText.doAfterTextChanged {
-            if (it != null)
-                binding.btnSearch.isEnabled = it.count() >= 2
+            if (it != null && it.count() >= 2) {
+                searchRepositoriesViewModel.getRecentSearchesByKeyword(it.toString())
+                binding.btnSearch.isEnabled = true
+            }
+            else
+                binding.btnSearch.isEnabled = false
         }
     }
 
@@ -70,15 +70,15 @@ class SearchRepositoriesFragment : BaseFragment<FragmentSearchRepositoriesBindin
     }
 
     private fun initAlertDialog() {
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setTitle(getString(R.string.alert_dialog_title))
-        alertDialogBuilder.setPositiveButton(getString(R.string.ok_label)) { _, _ ->
-            searchRepositoriesViewModel.deleteAllRecentSearches()
-        }
-        alertDialogBuilder.setNegativeButton(getString(R.string.cancel_label)) { dialog, _ ->
-            dialog.dismiss()
-        }
-        alertDialogBuilder.show()
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.alert_dialog_title))
+            .setPositiveButton(getString(R.string.ok_label)) { _, _ ->
+                searchRepositoriesViewModel.deleteAllRecentSearches()
+            }
+            .setNegativeButton(getString(R.string.cancel_label)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun goToRepositoryList(query: String) {

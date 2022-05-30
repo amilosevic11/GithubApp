@@ -9,10 +9,12 @@ data class RepositoryOwnerInformation(
     val id: Int,
     @SerializedName("login")
     val ownerName: String,
-    val avatar_url: String,
+    @SerializedName("avatar_url")
+    val avatarUrl: String,
     val url: String,
     @SerializedName("html_url")
     val profileUrl: String,
-    val repos_url: String,
+    @SerializedName("repos_url")
+    val reposUrl: String,
     val type: String
 ): Parcelable

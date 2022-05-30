@@ -48,18 +48,20 @@ class RepositoryDetailsFragment : BaseFragment<FragmentRepositoryDetailsBinding>
 
     private fun fillData(repository: Repository) {
         with(binding) {
-            sivOwnerAvatar.load(repository.owner.avatar_url)
+            sivOwnerAvatar.load(repository.owner.avatarUrl)
             mtvRepositoryName.text = repository.name
             mtvOwnerName.text = repository.owner.ownerName
             mtvDescription.text = repository.description
-            mtvOpenedIssuesCount.text = repository.open_issues_count.toString()
-            mtvWatchersCount.text = repository.watchers_count.toString()
-            mtvStarsCount.text = repository.stargazers_count.toString()
+            mtvOpenedIssuesCount.text = repository.openIssuesCount.toString()
+            mtvWatchersCount.text = repository.watchersCount.toString()
+            mtvStarsCount.text = repository.stargazersCount.toString()
 
-            if (repository.private)
+            if (repository.private) {
                 mtvIsLocked.text = getString(R.string.yes_label)
-            else
+            }
+            else {
                 mtvIsLocked.text = getString(R.string.no_label)
+            }
         }
     }
 

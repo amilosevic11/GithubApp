@@ -8,12 +8,7 @@ import java.lang.Exception
 
 class GithubSearchApiRepository(private val githubSearchApi: GithubSearchApi) {
 
-    suspend fun searchRepositories(query: String, sort: String): Flow<SearchRepositoriesResponse> = flow {
-        try {
-            emit(githubSearchApi.searchRepositories(query = query, sort = sort))
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-        }
+    suspend fun searchRepositories(query: String, sort: String): SearchRepositoriesResponse {
+         return githubSearchApi.searchRepositories(query, sort)
     }
 }

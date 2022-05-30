@@ -13,11 +13,11 @@ import hr.dice.amilosevic_.githubapp.helpers.formatInteger
 import hr.dice.amilosevic_.githubapp.models.Repository
 import hr.dice.amilosevic_.githubapp.ui.adapters.RepositoriesRecyclerViewAdapter
 import hr.dice.amilosevic_.githubapp.ui.baseFragment.BaseFragment
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RepositoryListFragment : BaseFragment<FragmentRepositoryListBinding>(), RepositoriesRecyclerViewAdapter.OnItemClickListener {
 
-    private val repositoryListViewModel: RepositoryListViewModel by inject()
+    private val repositoryListViewModel: RepositoryListViewModel by viewModel()
     private val repositoryListFragmentArgs: RepositoryListFragmentArgs by navArgs()
     private lateinit var repositoriesRecyclerViewAdapter: RepositoriesRecyclerViewAdapter
 
@@ -45,17 +45,19 @@ class RepositoryListFragment : BaseFragment<FragmentRepositoryListBinding>(), Re
 
     private fun observeData() {
         repositoryListViewModel.repositoriesResponse.observe(viewLifecycleOwner) {
-            repositoriesRecyclerViewAdapter.addRepositories(it.repositories)
+            repositoriesRecyclerViewAdapter.submitList(it.repositories)
             binding.mtvRepositoriesCount.text = getString(R.string.repository_results, formatInteger(it.overallNumberOfRepos))
             shouldShowProgressBar(false)
         }
     }
 
     private fun shouldShowProgressBar(show: Boolean) {
-        if(show)
+        if(show) {
             binding.circularProgressIndicator.show()
-        else
+        }
+        else {
             binding.circularProgressIndicator.visibility = View.GONE
+        }
     }
 
     override fun onItemClick(repository: Repository) {

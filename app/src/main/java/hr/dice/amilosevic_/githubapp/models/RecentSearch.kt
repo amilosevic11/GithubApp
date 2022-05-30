@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "recentSearches")
 data class RecentSearch(
     @PrimaryKey
-    var query: String
+    val query: String
 )

@@ -5,39 +5,34 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hr.dice.amilosevic_.githubapp.models.RecentSearch
-import hr.dice.amilosevic_.githubapp.models.SearchRepositoriesResponse
-import hr.dice.amilosevic_.githubapp.repos.GithubSearchApiRepository
 import hr.dice.amilosevic_.githubapp.repos.RecentSearchesRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SearchRepositoriesViewModel(
     private val recentSearchesRepository: RecentSearchesRepository
 ) : ViewModel() {
 
-    private var _recentSearches: MutableLiveData<ArrayList<String>> = MutableLiveData()
-    var recentSearches: LiveData<ArrayList<String>> = _recentSearches
+    private val _recentSearches: MutableLiveData<List<String>> = MutableLiveData()
+    val recentSearches: LiveData<List<String>>
+        get() = _recentSearches
 
-    fun getAllRecentSearches() {
-        viewModelScope.launch {
-            recentSearchesRepository.getAllRecentSearches().collect { recentSearchList ->
-                val recentSearches: ArrayList<String> = ArrayList()
-                recentSearchList.forEach {
-                    recentSearches.add(it.query)
-                }
-
-                _recentSearches.postValue(recentSearches)
+    fun getRecentSearchesByKeyword(keyword: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            recentSearchesRepository.getRecentSearchesByKeyword(keyword).collect {
+                _recentSearches.postValue(it)
             }
         }
     }
 
     fun saveQuery(query: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             recentSearchesRepository.addQuery(RecentSearch(query))
         }
     }
 
     fun deleteAllRecentSearches() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             recentSearchesRepository.deleteAllRecentSearches()
             _recentSearches.postValue(arrayListOf())
         }

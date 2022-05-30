@@ -3,8 +3,8 @@ package hr.dice.amilosevic_.githubapp.di
 import androidx.room.Room
 import hr.dice.amilosevic_.githubapp.BuildConfig
 import hr.dice.amilosevic_.githubapp.data.api.GithubSearchApi
-import hr.dice.amilosevic_.githubapp.data.roomdatabase.RecentSearchesDao
 import hr.dice.amilosevic_.githubapp.data.roomdatabase.RecentSearchesDatabase
+import hr.dice.amilosevic_.githubapp.helpers.DB_NAME
 import hr.dice.amilosevic_.githubapp.repos.GithubSearchApiRepository
 import hr.dice.amilosevic_.githubapp.repos.RecentSearchesRepository
 import hr.dice.amilosevic_.githubapp.ui.fragments.repositorydetails.RepositoryDetailsViewModel
@@ -30,26 +30,24 @@ val viewModelModule = module {
 
 val roomDatabaseModule = module {
     single {
-        Room.databaseBuilder(androidContext(), RecentSearchesDatabase::class.java, "RecentSearchesDatabase")
-            .build()
+        Room.databaseBuilder(
+            androidContext(),
+            RecentSearchesDatabase::class.java,
+            DB_NAME
+        ).build()
     }
     single {
-        provideRecentSearchesDao(get())
+        get<RecentSearchesDatabase>().recentSearchDao()
     }
-}
-fun provideRecentSearchesDao(recentSearchesDatabase: RecentSearchesDatabase): RecentSearchesDao {
-    return recentSearchesDatabase.recentSearchDao()
 }
 
 val networkModule = module {
-    single { provideRetrofit() }
-    single { provideNetwork(get()) }
+    single {
+        Retrofit.Builder()
+            .client(OkHttpClient.Builder().build())
+            .baseUrl(BuildConfig.SERVER_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+    single { get<Retrofit>().create(GithubSearchApi::class.java) }
 }
-fun provideRetrofit(): Retrofit {
-    return Retrofit.Builder()
-        .client(OkHttpClient.Builder().build())
-        .baseUrl(BuildConfig.SERVER_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-}
-fun provideNetwork(retrofit: Retrofit): GithubSearchApi = retrofit.create(GithubSearchApi::class.java)
