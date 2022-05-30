@@ -46,6 +46,9 @@ class SearchRepositoriesFragment : BaseFragment<FragmentSearchRepositoriesBindin
         searchRepositoriesViewModel.recentSearches.observe(viewLifecycleOwner) {
             initAutocompleteItems(it)
         }
+        searchRepositoriesViewModel.buttonEnabled.observe(viewLifecycleOwner) {
+            binding.btnSearch.isEnabled = it
+        }
     }
 
     private fun initAutocompleteItems(recentSearches: List<String>) {
@@ -55,12 +58,10 @@ class SearchRepositoriesFragment : BaseFragment<FragmentSearchRepositoriesBindin
 
     private fun initTextWatcher() {
         binding.textInputEditText.doAfterTextChanged {
-            if (it != null && it.count() >= 2) {
+            if (it != null) {
                 searchRepositoriesViewModel.getRecentSearchesByKeyword(it.toString())
-                binding.btnSearch.isEnabled = true
+                searchRepositoriesViewModel.shouldEnableButton(it.count())
             }
-            else
-                binding.btnSearch.isEnabled = false
         }
     }
 

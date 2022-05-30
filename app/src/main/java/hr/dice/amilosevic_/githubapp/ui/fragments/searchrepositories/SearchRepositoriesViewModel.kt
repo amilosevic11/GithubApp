@@ -13,6 +13,10 @@ class SearchRepositoriesViewModel(
     private val recentSearchesRepository: RecentSearchesRepository
 ) : ViewModel() {
 
+    private val _buttonEnabled: MutableLiveData<Boolean> = MutableLiveData()
+    val buttonEnabled: LiveData<Boolean>
+        get() = _buttonEnabled
+
     private val _recentSearches: MutableLiveData<List<String>> = MutableLiveData()
     val recentSearches: LiveData<List<String>>
         get() = _recentSearches
@@ -35,6 +39,15 @@ class SearchRepositoriesViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             recentSearchesRepository.deleteAllRecentSearches()
             _recentSearches.postValue(arrayListOf())
+        }
+    }
+
+    fun shouldEnableButton(count: Int) {
+        if(count >= 2) {
+            _buttonEnabled.postValue(true)
+        }
+        else {
+            _buttonEnabled.postValue(false)
         }
     }
 }
