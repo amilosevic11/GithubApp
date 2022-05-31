@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/searchRepositoriesFragment"
-        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.searchrepositories.SearchRepositoriesFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.searchrepositories.SearchRepositoriesFragment"
         android:label="SearchRepositoriesFragment">
         <action
             android:id="@+id/action_searchRepositoriesFragment_to_repositoryListFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/repositoryListFragment"
-        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.repositorylist.RepositoryListFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.repositorylist.RepositoryListFragment"
         android:label="RepositoryListFragment">
         <argument
             android:name="query"
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/repositoryDetailsFragment"
-        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.repositorydetails.RepositoryDetailsFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.repositorydetails.RepositoryDetailsFragment"
         android:label="RepositoryDetailsFragment">
         <argument
             android:name="repository"
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/ownerProfileAndRepositoriesFragment"
-        android:name="hr.dice.amilosevic_.githubapp.ui.fragments.webviewscreen.OwnerProfileAndRepositoriesFragment"
+        android:name="hr.dice.amilosevic_.githubapp.ui.webviewscreen.OwnerProfileAndRepositoriesFragment"
         android:label="OwnerProfileAndRepositoriesFragment">
         <argument
             android:name="name"

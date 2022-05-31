@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 class RecentSearchesRepository(private val recentSearchesDao: RecentSearchesDao) {
 
-    fun addQuery(recentSearch: RecentSearch) {
+    suspend fun addQuery(recentSearch: RecentSearch) {
         recentSearchesDao.insert(recentSearch)
     }
 
-    fun deleteAllRecentSearches() {
+    suspend fun deleteAllRecentSearches() {
         recentSearchesDao.deleteAll()
     }
 

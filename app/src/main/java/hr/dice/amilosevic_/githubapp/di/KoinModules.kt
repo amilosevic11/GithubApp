@@ -7,9 +7,9 @@ import hr.dice.amilosevic_.githubapp.data.roomdatabase.RecentSearchesDatabase
 import hr.dice.amilosevic_.githubapp.helpers.DB_NAME
 import hr.dice.amilosevic_.githubapp.repos.GithubSearchApiRepository
 import hr.dice.amilosevic_.githubapp.repos.RecentSearchesRepository
-import hr.dice.amilosevic_.githubapp.ui.fragments.repositorydetails.RepositoryDetailsViewModel
-import hr.dice.amilosevic_.githubapp.ui.fragments.repositorylist.RepositoryListViewModel
-import hr.dice.amilosevic_.githubapp.ui.fragments.searchrepositories.SearchRepositoriesViewModel
+import hr.dice.amilosevic_.githubapp.ui.repositorydetails.RepositoryDetailsViewModel
+import hr.dice.amilosevic_.githubapp.ui.repositorylist.RepositoryListViewModel
+import hr.dice.amilosevic_.githubapp.ui.searchrepositories.SearchRepositoriesViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RecentSearchesDao {
     @Insert(onConflict = REPLACE)
-    fun insert(recentSearch: RecentSearch)
+    suspend fun insert(recentSearch: RecentSearch)
 
     @Query("SELECT `query` FROM recentSearches WHERE `query` LIKE '%' || :keyword || '%'")
     fun getRecentSearchesByKeyword(keyword: String): Flow<List<String>>
 
     @Query("DELETE FROM recentSearches")
-    fun deleteAll()
+    suspend fun deleteAll()
 }
